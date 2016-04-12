@@ -20,4 +20,5 @@ import main.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main.views.index),
+    url(r'^@(?P<username>[\w-]+)/$', main.views.habit_list),
 ]
