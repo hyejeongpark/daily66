@@ -11,13 +11,13 @@
 
 ## Local setting
 
-```
+``` shell
 $ git clone git@github.com:hyejeongpark/daily66.git
 $ cd daily66
 $ pyvenv env
 $ . env/bin/activate
-$ pip install -r requirements.txt
-$ python manage.py migrate
-$ python manage.py createsuperuser
-$ python manage.py runserver
+(env) $ pip install -r requirements.txt
+(env) $ python manage.py migrate
+(env) $ python manage.py createsuperuser
+(env) $ python manage.py runserver
 ```
