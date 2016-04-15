@@ -1,0 +1,14 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<div>
+  <h2>{{ user }}</h2>
+</div>
+<div>
+  {% for habit in habits %}
+  <ul>
+    <li>{{ habit.title }}</li>
+  </ul>
+  {% endfor %}
+</div>
+{% endblock %}

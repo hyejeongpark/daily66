@@ -7,5 +7,7 @@ def index(request):
     habit_list = Habit.objects.all()
     return render(request, 'main/index.html', {'user_list': user_list,'habit_list': habit_list,})
 
-def habit_list(request, username):
-    return render(request, 'main/index.html')
+def user_page(request, username):
+    user = User.objects.get(username=username)
+    habits = Habit.objects.filter(user=user)
+    return render(request, 'main/user_page.html', {'user': username, 'habits': habits,})

@@ -1,20 +1,20 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-  <div>
-    <h2>User</h2>
+<div>
+  <h2>User</h2>
     {% for user in user_list %}
     <ul>
       <li>{{ user.username }}</li>
     </ul>
     {% endfor%}
-  </div>
-  <div>
-    <h2>Habit</h2>
+</div>
+<div>
+  <h2>Habit</h2>
     {% for habit in habit_list %}
     <ul>
-      <li>{{ habit.title }}</li>
+      <li>{{ habit.user }}</li>
     </ul>
     {% endfor%}
-  </div>
+</div>
 {% endblock %}
