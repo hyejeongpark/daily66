@@ -5,12 +5,12 @@
   <h2>{{ user }}</h2>
 </div>
 <div>
-  {% for habit in habits %}
   <ul>
+    {% for habit in habits %}
     <li>
       <a href="{% url "habit-detail" habit.id %}">{{ habit.title }}</a>
     </li>
+    {% endfor %}
   </ul>
-  {% endfor %}
 </div>
 {% endblock %}
