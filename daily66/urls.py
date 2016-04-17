@@ -20,6 +20,6 @@ import main.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main.views.index),
-    url(r'^@(?P<username>[\w-]+)/$', main.views.user_page),
-    url(r'^habits/(?P<pk>\d+)/$', main.views.habit_detail),
+    url(r'^@(?P<username>[\w-]+)/$', main.views.user_page, name="user-page"),
+    url(r'^habits/(?P<pk>\d+)/$', main.views.habit_detail, name="habit-detail"),
 ]

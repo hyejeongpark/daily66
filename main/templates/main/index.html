@@ -6,7 +6,7 @@
     {% for user in user_list %}
     <ul>
       <li>
-        <a href="{% url "main.views.user_page" user.username %}">{{ user.username }}</a>
+        <a href="{% url "user-page" user.username %}">{{ user.username }}</a>
       </li>
     </ul>
     {% endfor%}
@@ -15,7 +15,10 @@
   <h2>Habit</h2>
     {% for habit in habit_list %}
     <ul>
-      <li>{{ habit.title }}</li>
+      <li>
+        <a href="{% url "habit-detail" habit.id %}">{{ habit.title }}</a>
+        by <a href="{% url "user-page" user.username %}">{{ habit.user.username }}</a>
+      </li>
     </ul>
     {% endfor%}
 </div>

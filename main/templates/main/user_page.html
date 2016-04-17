@@ -7,7 +7,9 @@
 <div>
   {% for habit in habits %}
   <ul>
-    <li>{{ habit.title }}</li>
+    <li>
+      <a href="{% url "habit-detail" habit.id %}">{{ habit.title }}</a>
+    </li>
   </ul>
   {% endfor %}
 </div>

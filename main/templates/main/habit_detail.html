@@ -2,5 +2,5 @@
 
 {% block content %}
 <h1>{{ habit.title }}</h1>
-<p>{{ habit.user.username }}</p>
+<a href="{% url "user-page" user.username %}">{{ habit.user.username }}</a>
 {% endblock %}
