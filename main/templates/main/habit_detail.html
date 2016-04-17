@@ -3,4 +3,9 @@
 {% block content %}
 <h1>{{ habit.title }}</h1>
 <a href="{% url "user-page" user.username %}">{{ habit.user.username }}</a>
+<ul>
+  {% for log in logs %}
+  <li>{{ log.date }} / {{ log.content }} / {{ log.score }}</li>
+  {% endfor %}
+</ul>
 {% endblock %}

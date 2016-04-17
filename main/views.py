@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .models import Habit
+from .models import Log
 
 def index(request):
     user_list = User.objects.all()
@@ -14,4 +15,5 @@ def user_page(request, username):
 
 def habit_detail(request, pk):
     habit = Habit.objects.get(pk=pk)
-    return render(request, 'main/habit_detail.html', {'habit': habit,})
+    logs = Log.objects.filter(habit=habit)
+    return render(request, 'main/habit_detail.html', {'habit': habit, 'logs': logs,})
