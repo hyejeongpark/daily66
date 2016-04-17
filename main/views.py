@@ -11,3 +11,7 @@ def user_page(request, username):
     user = User.objects.get(username=username)
     habits = Habit.objects.filter(user=user)
     return render(request, 'main/user_page.html', {'user': username, 'habits': habits,})
+
+def habit_detail(request, pk):
+    habit = Habit.objects.get(pk=pk)
+    return render(request, 'main/habit_detail.html', {'habit': habit,})
