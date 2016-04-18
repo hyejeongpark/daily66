@@ -15,5 +15,5 @@ def user_page(request, username):
 
 def habit_detail(request, pk):
     habit = Habit.objects.get(pk=pk)
-    logs = Log.objects.filter(habit=habit)
+    logs = Log.objects.filter(habit=habit).order_by('date').reverse()
     return render(request, 'main/habit_detail.html', {'habit': habit, 'logs': logs,})
