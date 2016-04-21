@@ -11,6 +11,8 @@
 
 ## Local setting
 
+python
+
 ``` shell
 $ git clone git@github.com:hyejeongpark/daily66.git
 $ cd daily66
@@ -20,4 +22,11 @@ $ . env/bin/activate
 (env) $ python manage.py migrate
 (env) $ python manage.py createsuperuser
 (env) $ python manage.py runserver
+```
+
+Sass
+
+``` shell
+$ cd daily66/main/static/main/scss
+$ sass main.scss ../main.css
 ```
