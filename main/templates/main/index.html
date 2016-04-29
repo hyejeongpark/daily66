@@ -3,23 +3,23 @@
 {% block content %}
 <div>
   <h2>User</h2>
-    <ul>
-      {% for user in user_list %}
-      <li>
-        <a href="{% url "main:user-page" user.username %}">{{ user.username }}</a>
-      </li>
-      {% endfor%}
-    </ul>
+  <ul>
+    {% for user in user_list %}
+    <li>
+      <a href="{% url "main:user-page" user.username %}">{{ user.username }}</a>
+    </li>
+    {% endfor%}
+  </ul>
 </div>
 <div>
   <h2>Habit</h2>
-    <ul>
-      {% for habit in habit_list %}
-      <li>
-        <a href="{% url "main:habit-detail" habit.id %}">{{ habit.title }}</a>
-        by <a href="{% url "main:user-page" user.username %}">{{ habit.user.username }}</a>
-      </li>
-      {% endfor%}
-    </ul>
+  <ul>
+    {% for habit in habit_list %}
+    <li>
+      <a href="{% url "main:habit-detail" habit.id %}">{{ habit.title }}</a>
+      by <a href="{% url "main:user-page" user.username %}">{{ habit.user.username }}</a>
+    </li>
+    {% endfor%}
+  </ul>
 </div>
 {% endblock %}
