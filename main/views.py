@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect
 from .models import Habit
 from .models import Log
-from .forms import HabitForm
+from .forms import HabitForm, LogForm
 
 def index(request):
     user_list = User.objects.all()
@@ -25,7 +25,17 @@ def habit_new(request):
         form = HabitForm(request.POST)
         if form.is_valid():
             habit = form.save()
-            return redirect('main:habit_detail', habit.pk)
+            return redirect('main:habit-detail', habit.pk)
     else:
         form = HabitForm()
     return render(request, 'main/habit_form.html', {'form': form,})
+
+def log_new(request):
+    if request.method == 'POST':
+        form = LogForm(request.POST)
+        if form.is_valid():
+            log = form.save()
+            return redirect('main:habit-detail', log.habit.pk)
+    else:
+        form = LogForm()
+    return render(request, 'main/log_form.html', {'form': form,})
