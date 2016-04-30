@@ -44,11 +44,15 @@ def habit_new(request):
 
 @login_required
 def log_new(request, pk):
+    habit = Habit.objects.get(pk=pk)
+    if request.user != habit.user:
+        return redirect(habit)
+
     if request.method == 'POST':
         form = LogForm(request.POST)
         if form.is_valid():
             log = form.save(commit=False)
-            log.habit = Habit.objects.get(pk=pk)
+            log.habit = habit
             log.save()
             return redirect(log.habit)
     else:
