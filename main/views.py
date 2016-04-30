@@ -1,5 +1,6 @@
-from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Habit
 from .models import Log
@@ -27,11 +28,14 @@ def habit_detail(request, pk):
                   {'habit': habit, 'logs': logs, })
 
 
+@login_required
 def habit_new(request):
     if request.method == 'POST':
         form = HabitForm(request.POST)
         if form.is_valid():
-            habit = form.save()
+            habit = form.save(commit=False)
+            habit.user = request.user
+            habit.save()
             return redirect(habit)
     else:
         form = HabitForm()

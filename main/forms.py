@@ -5,7 +5,7 @@ from .models import Habit, Log
 class HabitForm(forms.ModelForm):
     class Meta:
         model = Habit
-        fields = '__all__'
+        fields = ('title', )
 
 
 class LogForm(forms.ModelForm):
