@@ -11,4 +11,4 @@ class HabitForm(forms.ModelForm):
 class LogForm(forms.ModelForm):
     class Meta:
         model = Log
-        fields = '__all__'
+        fields = ('date', 'content', 'score')

@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^habits/(?P<pk>\d+)/$', main.views.habit_detail,
         name="habit-detail"),
     url(r'^new/$', main.views.habit_new, name="habit-new"),
-    url(r'^log/$', main.views.log_new, name="log-new"),
+    url(r'^log/(?P<pk>\d+)/$', main.views.log_new, name="log-new"),
 ]

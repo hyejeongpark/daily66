@@ -23,7 +23,7 @@ def user_page(request, username):
 
 def habit_detail(request, pk):
     habit = Habit.objects.get(pk=pk)
-    logs = Log.objects.filter(habit=habit).order_by('date').reverse()
+    logs = Log.objects.filter(habit=habit).order_by('-date')
     return render(request, 'main/habit_detail.html',
                   {'habit': habit, 'logs': logs, })
 
@@ -42,11 +42,14 @@ def habit_new(request):
     return render(request, 'main/habit_form.html', {'form': form, })
 
 
-def log_new(request):
+@login_required
+def log_new(request, pk):
     if request.method == 'POST':
         form = LogForm(request.POST)
         if form.is_valid():
-            log = form.save()
+            log = form.save(commit=False)
+            log.habit = Habit.objects.get(pk=pk)
+            log.save()
             return redirect(log.habit)
     else:
         form = LogForm()

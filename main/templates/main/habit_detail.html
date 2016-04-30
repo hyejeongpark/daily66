@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ habit.title }}</h1>
 <h2><a href="{% url "main:user-page" user.username %}">{{ habit.user.username }}</a></h2>
-<a href="{% url "main:log-new" %}">+ Log</a>
+<a href="{% url "main:log-new" habit.id %}">+ Log</a>
 <ul>
   {% for log in logs %}
   <li>{{ log.date }} / {{ log.content }} / {{ log.score }}</li>
