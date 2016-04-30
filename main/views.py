@@ -25,7 +25,7 @@ def habit_new(request):
         form = HabitForm(request.POST)
         if form.is_valid():
             habit = form.save()
-            return redirect('main:habit-detail', habit.pk)
+            return redirect(habit)
     else:
         form = HabitForm()
     return render(request, 'main/habit_form.html', {'form': form,})
@@ -35,7 +35,7 @@ def log_new(request):
         form = LogForm(request.POST)
         if form.is_valid():
             log = form.save()
-            return redirect('main:habit-detail', log.habit.pk)
+            return redirect(log.habit)
     else:
         form = LogForm()
     return render(request, 'main/log_form.html', {'form': form,})

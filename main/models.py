@@ -10,7 +10,7 @@ class Habit(models.Model):
         return "{} - {}".format(self.title, self.user.username)
 
     def get_absolute_url(self):
-        return reverse('main:user-page', args=[self.pk])
+        return reverse('main:habit-detail', args=[self.pk])
 
 class Log(models.Model):
     habit = models.ForeignKey(Habit)
@@ -20,4 +20,3 @@ class Log(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.date, self.habit)
-
