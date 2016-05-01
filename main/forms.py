@@ -9,6 +9,10 @@ class HabitForm(forms.ModelForm):
         max_length=200,
         widget=forms.TextInput(attrs={'class': "form-control",
                                       'placeholder': "Title"}), )
+    description = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'class': "form-control",
+                                      'placeholder': "Description"}), )
     class Meta:
         model = Habit
         fields = ('title', )
