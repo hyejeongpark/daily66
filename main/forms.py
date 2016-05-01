@@ -66,21 +66,19 @@ class UserCreationForm(forms.ModelForm):
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         max_length=30,
-        widget=forms.TextInput(attrs={'class': "form-control"}),)
+        widget=forms.TextInput(attrs={'class': "form-control"}), )
     password = forms.CharField(
         label=_("Password"),
-        widget=forms.PasswordInput(attrs={'class': "form-control"}),)
+        widget=forms.PasswordInput(attrs={'class': "form-control"}), )
 
 
 class HabitForm(forms.ModelForm):
     title = forms.CharField(
         max_length=200,
-        widget=forms.TextInput(attrs={'class': "form-control",
-                                      'placeholder': "Title"}), )
+        widget=forms.TextInput(attrs={'class': "form-control"}), )
     description = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(attrs={'class': "form-control",
-                                      'placeholder': "Description"}), )
+        widget=forms.TextInput(attrs={'class': "form-control"}), )
     class Meta:
         model = Habit
         fields = ('title', )
@@ -92,8 +90,7 @@ class LogForm(forms.ModelForm):
         widget=extras.SelectDateWidget(years=[y for y in range(2010,2020)], ))
     content = forms.CharField(
         max_length=500,
-        widget=forms.TextInput(attrs={'class': "form-control",
-                                      'placeholder': "Content"}), )
+        widget=forms.TextInput(attrs={'class': "form-control"}), )
     score = forms.IntegerField()
     class Meta:
         model = Log
