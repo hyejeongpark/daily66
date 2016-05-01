@@ -1,10 +1,16 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Habit
 from .models import Log
 from .forms import HabitForm, LogForm
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main:index')
 
 
 def index(request):

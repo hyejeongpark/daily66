@@ -8,4 +8,5 @@ urlpatterns = [
         name="habit-detail"),
     url(r'^new/$', main.views.habit_new, name="habit-new"),
     url(r'^log/(?P<pk>\d+)/$', main.views.log_new, name="log-new"),
+    url(r'^logout/$', main.views.logout_view, name="logout"),
 ]
