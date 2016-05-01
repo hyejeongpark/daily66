@@ -1,0 +1,52 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+<h2>Login</h2>
+  {% if form.non_field_errors %}
+  <p>{{ form.non_field_errors }}</p>
+  {% endif %}
+
+  {% if user.is_authenticated %}
+  <p>You already logged in.</p>
+  {% else %}
+  <form method="post" action="{% url 'main:login' %}">{% csrf_token %}
+    {% if form.username.errors %}
+    <div class="form-group has-danger">
+      <label for="id_username">Username</label>
+      {{ form.username }}
+      <ul>
+        {% for error in form.username.errors %}
+        <li>{{ error|escape }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <div class="form-group">
+      <label for="id_username">Username</label>
+      {{ form.username }}
+    </div>
+    {% endif %}
+
+    {% if form.password.errors %}
+    <div class="form-group has-danger">
+      <label for="id_password">Password</label>
+      {{ form.password }}
+      <ul>
+        {% for error in form.password.errors %}
+        <li>{{ error|escape }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <div class="form-group">
+    <label for="id_password">Password</label>
+    {{ form.password }}
+    </div>
+    {% endif %}
+
+    <button type="submit" value="login" class="btn btn-info btn-block">
+      Login
+    </button>
+  </form>
+  {% endif %}
+{% endblock %}

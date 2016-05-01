@@ -1,11 +1,22 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from django.shortcuts import render
-from django.shortcuts import redirect
-from .models import Habit
-from .models import Log
-from .forms import HabitForm, LogForm
+from django.shortcuts import render, redirect
+from main.models import Habit, Log
+from main.forms import HabitForm, LogForm, UserCreationForm
+
+def join_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = authenticate(username=request.POST['username'],
+                                password=request.POST['password1'])
+            login(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = UserCreationForm()
+    return render(request, 'main/join.html', {'form': form, })
 
 
 def logout_view(request):

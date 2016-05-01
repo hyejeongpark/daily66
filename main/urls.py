@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
+from main.forms import LoginForm
 import main.views
 
 urlpatterns = [
@@ -8,5 +10,9 @@ urlpatterns = [
         name="habit-detail"),
     url(r'^new/$', main.views.habit_new, name="habit-new"),
     url(r'^log/(?P<pk>\d+)/$', main.views.log_new, name="log-new"),
-    url(r'^logout/$', main.views.logout_view, name="logout"),
+    url(r'^accounts/join/$', main.views.join_view, name='join'),
+    url(r'^accounts/login/$', auth_views.login,
+        {'template_name': 'main/login.html',
+         'authentication_form': LoginForm}, name='login'),
+    url(r'^accounts/logout/$', main.views.logout_view, name="logout"),
 ]
