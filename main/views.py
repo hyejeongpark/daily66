@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.contrib.auth import logout
+from django.views.generic.edit import CreateView
 from django.shortcuts import render, redirect
 from main.models import Habit, Log
 from main.forms import HabitForm, LogForm, UserCreationForm
@@ -45,33 +47,30 @@ def habit_detail(request, pk):
                   {'habit': habit, 'logs': logs, })
 
 
-@login_required
-def habit_new(request):
-    if request.method == 'POST':
-        form = HabitForm(request.POST)
-        if form.is_valid():
-            habit = form.save(commit=False)
-            habit.user = request.user
-            habit.save()
-            return redirect(habit)
-    else:
-        form = HabitForm()
-    return render(request, 'main/habit_form.html', {'form': form, })
+@method_decorator(login_required, name='dispatch')
+class HabitCreate(CreateView):
+    form_class = HabitForm
+    template_name = 'main/habit_form.html'
 
-
-@login_required
-def log_new(request, pk):
-    habit = Habit.objects.get(pk=pk)
-    if request.user != habit.user:
+    def form_valid(self, form):
+        habit = form.save(commit=False)
+        habit.user = self.request.user
+        habit.save()
         return redirect(habit)
 
-    if request.method == 'POST':
-        form = LogForm(request.POST)
-        if form.is_valid():
-            log = form.save(commit=False)
-            log.habit = habit
-            log.save()
-            return redirect(log.habit)
-    else:
-        form = LogForm()
-    return render(request, 'main/log_form.html', {'form': form, })
+
+@method_decorator(login_required, name='dispatch')
+class LogCreate(CreateView):
+    model = Log
+    form_class = LogForm
+    template_name = 'main/log_form.html'
+
+        # if self.request.user != habit.user:
+        #     return redirect(habit)
+
+    def form_valid(self, form):
+        habit = Habit.objects.get(pk=self.kwargs['pk'])
+        log = form.save(commit=False)
+        log.habit = habit
+        log.save()
+        return redirect(log.habit)

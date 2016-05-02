@@ -81,7 +81,7 @@ class HabitForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': "form-control"}), )
     class Meta:
         model = Habit
-        fields = ('title', )
+        fields = ('title', 'description')
 
 
 class LogForm(forms.ModelForm):
