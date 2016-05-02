@@ -7,7 +7,7 @@
 <a href="{% url "main:habit-delete" habit.id %}">delete</a>
 {% endif %}
 <p>{{ habit.description }}</p>
-<h2><a href="{% url "main:user-page" user.username %}">{{ habit.user.username }}</a></h2>
+<h2><a href="{% url "main:user-page" habit.user.username %}">{{ habit.user.username }}</a></h2>
 {% if user == habit.user %}
 <a href="{% url "main:log-add" habit.id %}">+ Log</a>
 {% endif %}
