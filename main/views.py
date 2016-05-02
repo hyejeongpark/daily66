@@ -2,7 +2,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth import logout
-from django.views.generic.edit import CreateView
+from django.http.response import HttpResponseRedirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from main.models import Habit, Log
 from main.forms import HabitForm, LogForm, UserCreationForm
@@ -58,6 +60,31 @@ class HabitCreate(CreateView):
         habit.save()
         return redirect(habit)
 
+
+@method_decorator(login_required, name='dispatch')
+class HabitUpdate(UpdateView):
+    model = Habit
+    form_class = HabitForm
+    template_name = 'main/habit_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            return redirect(obj)
+        return super(HabitUpdate, self).dispatch(request, *args, **kwargs)
+
+    def form_vaild(self, form):
+        habit = Habit.objects.get(pk=self.object.pk)
+        is_updated = form.cleaned_data['title'] != habit.title or \
+            form.cleaned_data['description'] != habit.description
+        if is_updated:
+            habit = form.save()
+            args = (habit.user.username, habit.pk)
+            url = reverse('main:habit-detail', args=args)
+        else:
+            args = (self.object.user.username, self.object.id)
+            url = reverse('main:habit-detail', args=args)
+        return HttpResponseRedirect(url)
 
 @method_decorator(login_required, name='dispatch')
 class LogCreate(CreateView):
