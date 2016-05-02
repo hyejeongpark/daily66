@@ -3,7 +3,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import ugettext, ugettext_lazy as _
-from django.forms import extras
 from main.models import Habit, Log
 import datetime
 
@@ -87,11 +86,14 @@ class HabitForm(forms.ModelForm):
 class LogForm(forms.ModelForm):
     date = forms.DateField(
         initial=datetime.date.today,
-        widget=extras.SelectDateWidget(years=[y for y in range(2010,2020)], ))
+        widget=forms.DateInput(attrs={'class': "form-control",
+                                      'type': "date"}), )
     content = forms.CharField(
         max_length=500,
         widget=forms.TextInput(attrs={'class': "form-control"}), )
-    score = forms.IntegerField()
+    score = forms.IntegerField(
+        widget=forms.TextInput(attrs={'class': "form-control",
+                                      'type': "number"}), )
     class Meta:
         model = Log
         fields = ('date', 'content', 'score')
