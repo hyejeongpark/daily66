@@ -5,7 +5,7 @@ from django.contrib.auth import logout
 from django.http.response import HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from main.models import Habit, Log
 from main.forms import HabitForm, LogForm, UserCreationForm
 
@@ -108,15 +108,17 @@ class HabitDelete(DeleteView):
 
 @method_decorator(login_required, name='dispatch')
 class LogCreate(CreateView):
-    model = Log
     form_class = LogForm
     template_name = 'main/log_form.html'
 
-        # if self.request.user != habit.user:
-        #     return redirect(habit)
+    def dispatch(self, request, *args, **kwargs):
+        obj = get_object_or_404(Habit, pk=self.kwargs.get('pk'))
+        if obj.user != self.request.user:
+            return redirect(obj)
+        return super(LogCreate, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        habit = Habit.objects.get(pk=self.kwargs['pk'])
+        habit = get_object_or_404(Habit, pk=self.kwargs.get('pk'))
         log = form.save(commit=False)
         log.habit = habit
         log.save()
