@@ -6,6 +6,9 @@
 {% else %}
 <h1>Create new habit</h1>
 {% endif %}
+{% if form.errors %}
+{{ form.errors }}
+{% endif %}
 <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
   <div class="form-group">
     <label for="id_title">Title</label>
