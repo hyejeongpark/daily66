@@ -4,7 +4,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth import logout
 from django.http.response import HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import render, redirect
 from main.models import Habit, Log
 from main.forms import HabitForm, LogForm, UserCreationForm
@@ -85,6 +85,26 @@ class HabitUpdate(UpdateView):
             args = (self.object.user.username, self.object.id)
             url = reverse('main:habit-detail', args=args)
         return HttpResponseRedirect(url)
+
+
+@method_decorator(login_required, name='dispatch')
+class HabitDelete(DeleteView):
+    model = Habit
+    template_name = 'main/habit_delete_confirm.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:
+            return redirect(obj)
+        return super(HabitDelete, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('main:user-page',
+                            kwargs={'username': self.request.user.username})
+
+    def delete(self, request, *args, **kwargs):
+        return super(HabitDelete, self).delete(request, *args, **kwargs)
+
 
 @method_decorator(login_required, name='dispatch')
 class LogCreate(CreateView):
