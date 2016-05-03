@@ -30,3 +30,9 @@ Sass
 $ cd daily66/main/static/main/scss
 $ sass main.scss ../main.css
 ```
+
+Flake8
+
+``` shell
+$ flake8 main
+```
