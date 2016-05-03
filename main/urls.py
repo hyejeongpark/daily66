@@ -1,7 +1,8 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from main.forms import LoginForm
-from main.views import HabitCreate, HabitUpdate, HabitDelete, LogCreate
+from main.views import HabitCreate, HabitUpdate, HabitDelete, LogCreate, \
+    LogUpdate
 import main.views
 
 urlpatterns = [
@@ -14,7 +15,8 @@ urlpatterns = [
         name="habit-edit"),
     url(r'^habit/(?P<pk>\d+)/delete/$', HabitDelete.as_view(),
         name="habit-delete"),
-    url(r'^habit/(?P<pk>\d+)/log/add/$', LogCreate.as_view(), name="log-add"),
+    url(r'^habit/(?P<pk>\d+)/newlog/$', LogCreate.as_view(), name="log-add"),
+    url(r'^log/(?P<pk>\d+)/edit/$', LogUpdate.as_view(), name="log-edit"),
     url(r'^accounts/join/$', main.views.join_view, name='join'),
     url(r'^accounts/login/$', auth_views.login,
         {'template_name': 'main/login.html',

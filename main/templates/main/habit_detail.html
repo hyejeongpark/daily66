@@ -15,7 +15,7 @@
   {% for log in logs %}
   <li>{{ log.date }} / {{ log.content }} / {{ log.score }}</li>
   {% if user == habit.user %}
-  <a href="#">edit</a>
+  <a href="{% url "main:log-edit" log.id %}">edit</a>
   <a href="#">delete</a>
   {% endif %}
   {% endfor %}

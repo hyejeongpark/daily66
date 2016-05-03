@@ -123,3 +123,31 @@ class LogCreate(CreateView):
         log.habit = habit
         log.save()
         return redirect(log.habit)
+
+
+@method_decorator(login_required, name='dispatch')
+class LogUpdate(UpdateView):
+    model = Log
+    form_class = LogForm
+    template_name = 'main/log_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = get_object_or_404(Log, pk=self.kwargs.get('pk'))
+        print(obj.habit)
+        if obj.habit.user != self.request.user:
+            return redirect(obj)
+        return super(LogUpdate, self).dispatch(request, *args, **kwargs)
+
+    def form_vaild(self, form):
+        log = Log.objects.get(pk=self.object.pk)
+        is_updated = form.cleaned_data['date'] != log.date or \
+            form.cleaned_data['content'] != log.content or \
+            form.cleaned_date['score'] != log.score
+        if is_updated:
+            log = form.save()
+            args = (log.habit.user.username, log.habit.pk)
+            url = reverse('main:habit-detail', args=args)
+        else:
+            args = (self.object.habit.user.username, self.object.habit.id)
+            url = reverse('main:habit-detail', args=args)
+        return HttpResponseRedirect(url)

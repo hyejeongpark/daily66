@@ -23,3 +23,6 @@ class Log(models.Model):
 
     def __str__(self):
         return "{} - {}".format(self.date, self.habit)
+
+    def get_absolute_url(self):
+        return reverse('main:habit-detail', args=[self.habit.pk])
