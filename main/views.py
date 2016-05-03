@@ -133,7 +133,6 @@ class LogUpdate(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         obj = get_object_or_404(Log, pk=self.kwargs.get('pk'))
-        print(obj.habit)
         if obj.habit.user != self.request.user:
             return redirect(obj)
         return super(LogUpdate, self).dispatch(request, *args, **kwargs)
@@ -151,3 +150,22 @@ class LogUpdate(UpdateView):
             args = (self.object.habit.user.username, self.object.habit.id)
             url = reverse('main:habit-detail', args=args)
         return HttpResponseRedirect(url)
+
+
+@method_decorator(login_required, name='dispatch')
+class LogDelete(DeleteView):
+    model = Log
+    template_name = 'main/log_delete_confirm.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = get_object_or_404(Log, pk=self.kwargs.get('pk'))
+        if obj.habit.user != self.request.user:
+            return redirect(obj)
+        return super(LogDelete, self).dispatch(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse_lazy('main:habit-detail',
+                            kwargs={'pk': self.object.habit.pk})
+
+    def delete(self, request, *args, **kwargs):
+        return super(LogDelete, self).delete(request, *args, **kwargs)
