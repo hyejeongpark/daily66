@@ -14,6 +14,10 @@
 <ul>
   {% for log in logs %}
   <li>{{ log.date }} / {{ log.content }} / {{ log.score }}</li>
+  {% if user == habit.user %}
+  <a href="#">edit</a>
+  <a href="#">delete</a>
+  {% endif %}
   {% endfor %}
 </ul>
 {% endblock %}
