@@ -1,7 +1,11 @@
 {% extends "main/base.html" %}
 
 {% block content %}
-<h1>New log</h1>
+{% if log.id %}
+<h1>Edit log</h1>
+{% else %}
+<h1>Create new log</h1>
+{% endif %}
 {% if form.errors %}
 {{ form.errors }}
 {% endif %}
